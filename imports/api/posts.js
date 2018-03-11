@@ -9,12 +9,27 @@ if (Meteor.isServer) {
   Meteor.methods({
     addPost: function(title, text){
       Posts.insert({
-        // TODOS
+        ownerId: Meteor.userId(),
+        username: Meteor.users.findOne(Meteor.userId()).username,
+        title: title,
+        text: text,
+        viewCount: 0,
+        createdAt: new Date()
       });
     },
     editPost: function(id, title, text){
-      Posts.update({
-        // TODOS
+      Posts.update(id, {
+        $set: {
+          title: title,
+          text: text
+        }
+      });
+    },
+    addTag: function(id, tag){
+      Posts.update(id, {
+        $set: {
+          tag: tag
+        }
       });
     },
     deletePost: function(id){
@@ -22,7 +37,11 @@ if (Meteor.isServer) {
     }
   });
 
+  Meteor.publish('posts', function() {
+    return Posts.find({});
+  });
+
   Meteor.publish('userPosts', function() {
-    return Stats.find({authorId: this.userId}, {limit: 30, sort: {createdAt: -1}});
+    return Posts.find({ownerId: this.userId}, {limit: 10, sort: {createdAt: -1}});
   });
 }

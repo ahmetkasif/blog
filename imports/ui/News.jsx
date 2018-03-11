@@ -1,41 +1,59 @@
 import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Image, Header, Label, Icon, Card, Button } from 'semantic-ui-react';
+import Loading from './Loading.jsx';
 
-export default class News extends Component {
+class News extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.renderPosts = this.renderPosts.bind(this);
+  }
+
+  renderPosts(){
+    if(this.props.posts){
+      return this.props.posts.map((post) => (
+        <Card>
+          <Card.Content>
+            <Card.Header>
+              {post.title}
+            </Card.Header>
+            <Card.Meta>
+              {post.username}
+            </Card.Meta>
+            <Card.Description>
+              {post.text}
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      ));
+    } else {
+      return (
+        <Loading/>
+      );
+    }
+  }
+
   render() {
     return (
-      <div className="home">
-        <div className="card card-custom-bg">
-          <div className="card-body">
-            <div className="card-title">
-              Neler yapılabilir ?
-            </div>
-            <p className="card-text">
-                - Şu aşamada hiçbirşey!
-            </p>
-          </div>
-        </div>
-        <div className="card card-block card-custom-bg">
-          <div className="card-body">
-            <div className="card-title">
-              Kısa ve Orta Vadede :
-            </div>
-            <p className="card-text">
-              - Herkese açık sohbet odası, kişisel makale paylaşımı, herkese açık, okuma ve yorumlama imkanı,
-              yazarlar arası takipleşme, profil sayfası, Android Uygulaması, ve daha fazlası...
-            </p>
-          </div>
-        </div>
-        <div className="card card-block card-custom-bg">
-          <div className="card-body">
-            <div className="card-title">
-              Bilinen Hatalar
-            </div>
-            <p className="card-text">
-              - Sen söyle :)
-            </p>
-          </div>
-        </div>
-      </div>
+      <Card className="profile">
+        <Card.Content>
+          <Card.Header>
+            Yeni Makaleler
+          </Card.Header>
+          <Card.Description>
+            {this.renderPosts()}
+          </Card.Description>
+        </Card.Content>
+      </Card>
     );
   }
 }
+
+export default NewsContainer = withTracker(props => {
+  Meteor.subscribe('posts');
+  const posts = Posts.find({}).fetch();
+  return{
+    posts
+  };
+})(News);

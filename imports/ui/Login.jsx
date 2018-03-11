@@ -7,7 +7,7 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      username: this.props.location.state.username,
+      username: '',
       password: ''
     };
 
@@ -71,22 +71,19 @@ export default class Login extends Component {
       <div className='loginContainer'>
         <Card className="login">
           <Card.Content>
-            <Input fluid value={this.state.username} onChange={this.updateUsername} placeholder='Username' /><br/>
-            <Input fluid value={this.state.password} onChange={this.updatePassword} type='password' placeholder='Password' /><br/>
-            <Button fluid onClick={() => this.login()} color='teal' floated='right' type='submit'>Login</Button>
-          </Card.Content>
-          <Card.Content>
-            Don't have an account ? <p className='authActions' onClick={() => this.props.history.push('/register', {username: this.state.username})}>Register</p>
+            <Input fluid value={this.state.username} onChange={this.updateUsername} placeholder='Kullanıcı Adı' /><br/>
+            <Input fluid value={this.state.password} onChange={this.updatePassword} type='password' placeholder='Şifre' /><br/>
+            <Button fluid onClick={() => this.login()} color='teal' floated='right' type='submit'>Giriş Yap</Button>
           </Card.Content>
         </Card>
-        <Modal trigger={<Statistic className='authData' size='mini' value='v1.7.8'/>}>
-          <Modal.Header>Latest News and Basic Info</Modal.Header>
+        <Modal trigger={<Statistic className='authData' size='mini' value='v0.0.3'/>}>
+          <Modal.Header>Son haberler ve S.S.S</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
               <Message
                 floating
                 info
-                header='Features'
+                header='Özet'
                 list={[
                   'TODO'
                 ]}
@@ -94,7 +91,7 @@ export default class Login extends Component {
               <Message
                 floating
                 success
-                header='Patch Notes'
+                header='Yama Notları'
                 list={[
                   'TODO',
                 ]}

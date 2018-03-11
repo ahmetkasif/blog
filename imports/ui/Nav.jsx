@@ -8,13 +8,14 @@ export default class Nav extends Component {
     this.handleRoute = this.handleRoute.bind(this);
   }
 
+  state = {}
+
   handleRoute(targetRoute){
     if (targetRoute !== this.props.location.pathname) {
       this.props.history.push(targetRoute);
     }
   }
 
-  state = {}
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
@@ -31,27 +32,34 @@ export default class Nav extends Component {
           onClick={() => this.handleRoute('/')}>
             Anasayfa
         </Menu.Item>
-        <Menu.Item
-          name='Sohbet Odası'
-          active={this.props.location.pathname === 'chat'}
-          onClick={() => this.handleRoute('/chat')}>
-            Sohbet Odası
-        </Menu.Item>
-        <Menu.Item
-          name='Makale Yaz'
-          active={this.props.location.pathname === 'newPost'}
-          onClick={() => this.handleRoute('/newPost')}>
-            Yeni Makale
-        </Menu.Item>
-        <Menu.Menu position='right'>
-          <Dropdown item text='Settings'>
-            <Dropdown.Menu>
-              <Dropdown.Item text='Profile' onClick={() => this.handleRoute('/profile')}/>
-              <Dropdown.Item text='Settings' onClick={() => this.handleRoute('/settings')}/>
-              <Dropdown.Item text='Logout' onClick={() => Meteor.logout(() => this.props.history.push('/auth'))}/>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Menu>
+        {Meteor.userId() ?
+          <Menu.Item
+            name='Makale Yaz'
+            active={this.props.location.pathname === 'newPost'}
+            onClick={() => this.handleRoute('/newPost')}>
+              Yeni Makale
+          </Menu.Item>
+          : null
+        }
+        {Meteor.userId() ?
+          <Menu.Menu position='right'>
+            <Dropdown item text='Settings'>
+              <Dropdown.Menu>
+                <Dropdown.Item text='Profile' onClick={() => this.handleRoute('/profile')}/>
+                <Dropdown.Item text='Settings' onClick={() => this.handleRoute('/settings')}/>
+                <Dropdown.Item text='Logout' onClick={() => Meteor.logout(() => this.props.history.push('/auth'))}/>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Menu>
+          :
+          <Menu.Item
+            position='right'
+            name='Giriş Yap'
+            active={this.props.location.pathname === 'login'}
+            onClick={() => this.handleRoute('/login')}>
+              Giriş Yap
+          </Menu.Item>
+        }
       </Menu>
     )
   }

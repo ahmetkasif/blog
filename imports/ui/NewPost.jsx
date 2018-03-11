@@ -31,11 +31,11 @@ export default class NewPost extends Component {
  }
 
   addPost(){
-    /*Meteor.call(
+    Meteor.call(
       'addPost',
       this.state.title,
       this.state.text
-    );*/
+    );
     new Noty({
       type: 'success',
       layout: 'topRight',
@@ -49,7 +49,6 @@ export default class NewPost extends Component {
         close: 'noty_effects_close'
       }
     }).show();
-    console.log(this.state.title + ", " + this.state.text);
     this.props.history.push('/');
   }
 
