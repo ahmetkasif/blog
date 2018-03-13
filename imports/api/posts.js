@@ -9,8 +9,7 @@ if (Meteor.isServer) {
   Meteor.methods({
     addPost: function(title, text){
       Posts.insert({
-        ownerId: Meteor.userId(),
-        username: Meteor.users.findOne(Meteor.userId()).username,
+        authorId: Meteor.userId(),
         title: title,
         text: text,
         viewCount: 0,
@@ -37,11 +36,16 @@ if (Meteor.isServer) {
     }
   });
 
+  Meteor.publish('users', function() {
+    let users = Meteor.users.find({}, { fields: { username: 1, emails: 1 }});
+    return users;
+  });
+
   Meteor.publish('posts', function() {
     return Posts.find({});
   });
 
   Meteor.publish('userPosts', function() {
-    return Posts.find({ownerId: this.userId}, {limit: 10, sort: {createdAt: -1}});
+    return Posts.find({authorId: this.userId}, {limit: 10, sort: {createdAt: -1}});
   });
 }

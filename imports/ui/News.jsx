@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Image, Header, Label, Icon, Card, Button } from 'semantic-ui-react';
 import Loading from './Loading.jsx';
+var gravatar = require('gravatar');
 
 class News extends Component {
   constructor(props) {
@@ -10,16 +11,29 @@ class News extends Component {
     this.renderPosts = this.renderPosts.bind(this);
   }
 
+  renderAuthorPic(mail){
+    if(mail){
+      return(
+        <Image floated='right' size='mini' src={gravatar.url(mail.address)} />
+      );
+    } else {
+      return(
+        <Loading/>
+      );
+    }
+  }
+
   renderPosts(){
-    if(this.props.posts){
+    if(this.props.posts.length !== 0){
       return this.props.posts.map((post) => (
-        <Card>
+        <Card key={post._id}>
           <Card.Content>
+            {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
             <Card.Header>
               {post.title}
             </Card.Header>
             <Card.Meta>
-              {post.username}
+              {post.authorName}
             </Card.Meta>
             <Card.Description>
               {post.text}
@@ -28,7 +42,7 @@ class News extends Component {
         </Card>
       ));
     } else {
-      return (
+      return(
         <Loading/>
       );
     }
@@ -52,8 +66,20 @@ class News extends Component {
 
 export default NewsContainer = withTracker(props => {
   Meteor.subscribe('posts');
-  const posts = Posts.find({}).fetch();
-  return{
+  Meteor.subscribe('users');
+
+  let users = Meteor.users.find().fetch();
+
+  const posts = Posts.find({}, {transform: function (post) {
+    const author = Meteor.users.findOne({_id: post.authorId}, { fields: { username: 1, emails: 1 }});
+    if(author){
+      post.authorName = author.username;
+      post.authorMails = author.emails;
+    }
+    return post;
+  }}).fetch();
+
+  return {
     posts
   };
 })(News);

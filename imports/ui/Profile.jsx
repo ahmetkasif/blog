@@ -2,7 +2,8 @@ import React, { Component, constructor } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Accounts } from 'meteor/accounts-base';
 import { Image, Header, Label, Icon, Card, Button } from 'semantic-ui-react';
-import Gravatar from 'react-gravatar';
+
+var gravatar = require('gravatar');
 
 import Loading from './Loading.jsx';
 
@@ -10,19 +11,33 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.renderProfile = this.renderProfile.bind(this);
     this.renderPosts = this.renderPosts.bind(this);
   }
 
+  renderAuthorPic(mail){
+    if(mail){
+      return(
+        <Image floated='right' size='mini' src={gravatar.url(mail.address)} />
+      );
+    } else {
+      return(
+        <Loading/>
+      );
+    }
+  }
+
   renderPosts(){
-    if(this.props.posts){
+    if(this.props.posts.length !== 0){
       return this.props.posts.map((post) => (
-        <Card>
+        <Card key={post._id}>
           <Card.Content>
+            {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
             <Card.Header>
               {post.title}
             </Card.Header>
             <Card.Meta>
-              {post.ownerId}
+              {post.authorName}
             </Card.Meta>
             <Card.Description>
               {post.text}
@@ -31,42 +46,61 @@ class Profile extends Component {
         </Card>
       ));
     } else {
-      <Loading/>
+      return(
+        <Loading/>
+      );
     }
   }
 
-  render() {
-    if (this.props.user) {
-      return (
+  renderProfile(){
+    if(this.props.user){
+      return(
         <Card className="profile">
           <Card.Content header={
             <div className="profileTop">
               <Header as='h4' image>
-                <Gravatar email={this.props.user.emails[0].address} />
+                <Image src={gravatar.url(this.props.user.emails[0].address)} />
                 <Header.Content>
                   {this.props.user.username}
                   <Header.Subheader>{this.props.user.emails[0].address}</Header.Subheader>
                 </Header.Content>
               </Header>
             </div>
-          } />
+          }/>
           <Card.Content description={
             this.renderPosts()
           }/>
         </Card>
       );
     } else {
-      return (
+      return(
         <Loading/>
       );
     }
+  }
+
+  render() {
+    return(
+      <div>
+        {this.renderProfile()}
+      </div>
+    );
   }
 }
 
 export default ProfileContainer = withTracker(props => {
   Meteor.subscribe('userPosts');
   const user = Meteor.users.findOne(Meteor.userId(), {profile: 1, username: 1, emails: 1});
-  const posts = Posts.find({}).fetch();
+
+  const posts = Posts.find({}, {transform: function (post) {
+    const author = Meteor.users.findOne({_id: post.authorId}, { fields: { username: 1, emails: 1 }});
+    if(author){
+      post.authorName = author.username;
+      post.authorMails = author.emails;
+    }
+    return post;
+  }}).fetch();
+
   return{
     user,
     posts

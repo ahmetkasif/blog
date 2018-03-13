@@ -83,17 +83,17 @@ export default class Login extends Component {
               <Message
                 floating
                 info
-                header='Özet'
+                header='Sürüm'
                 list={[
-                  'TODO'
+                  '0.0.4a'
                 ]}
               />
               <Message
                 floating
                 success
-                header='Yama Notları'
+                header='Bilgi'
                 list={[
-                  'TODO',
+                  'Makale yazarlığı için lütfen ksfahmet@gmail.com adresinden e-posta yoluyla iletişime geçiniz.',
                 ]}
               />
             </Modal.Description>
