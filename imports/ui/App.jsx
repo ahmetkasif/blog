@@ -9,11 +9,14 @@ import Loading from './Loading.jsx';
 import NotFound from './NotFound.jsx';
 
 import Nav from './Nav.jsx';
+import About from './About.jsx';
+import ForgotPassword from './ForgotPassword.jsx';
 import ProfileContainer from './Profile.jsx';
 import NewPost from './NewPost.jsx';
 import Login from './Login.jsx';
 import NewsContainer from './News.jsx';
 import SettingsContainer from './Settings.jsx';
+import PostDetailsContainer from './PostDetails.jsx';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -63,9 +66,12 @@ export default class App extends Component {
             <PrivateRoute path="/newPost" exact component={NewPost}/>
             <PrivateRoute path="/settings" exact component={SettingsContainer}/>
             <DefaultLayout path="/" exact component={NewsContainer}/>
+            <DefaultLayout path="/postDetails/:id" exact component={PostDetailsContainer}/>
             <DefaultLayout path="/profile" exact component={ProfileContainer}/>
             <DefaultLayout path="/loading" exact component={Loading}/>
+            <DefaultLayout path="/about" exact component={About}/>
             <DefaultLayout path="/login" exact component={Login}/>
+            <DefaultLayout path="/forgotPassword" exact component={ForgotPassword}/>
             <DefaultLayout component={NotFound} />
           </Switch>
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Image, Header, Label, Icon, Card, Button } from 'semantic-ui-react';
 
-class Settings extends Component {
+export default class About extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,7 +15,7 @@ class Settings extends Component {
           <div className="profileTop">
             <Header as='h4'>
               <Header.Content>
-                Hesap Ayarları
+                Hakkında
               </Header.Content>
             </Header>
           </div>
@@ -27,9 +27,3 @@ class Settings extends Component {
     );
   }
 }
-
-
-export default SettingsContainer = withTracker(props => {
-  return{
-  };
-})(Settings);

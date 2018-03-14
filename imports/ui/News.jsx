@@ -51,14 +51,18 @@ class News extends Component {
   render() {
     return (
       <Card className="profile">
-        <Card.Content>
-          <Card.Header>
-            Yeni Makaleler
-          </Card.Header>
-          <Card.Description>
-            {this.renderPosts()}
-          </Card.Description>
-        </Card.Content>
+        <Card.Content header={
+          <div className="profileTop">
+            <Header as='h4' image>
+              <Header.Content>
+                Yeni Makaleler
+              </Header.Content>
+            </Header>
+          </div>
+        }/>
+        <Card.Content description={
+          this.renderPosts()
+        }/>
       </Card>
     );
   }

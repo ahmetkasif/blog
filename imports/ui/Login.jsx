@@ -14,6 +14,7 @@ export default class Login extends Component {
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.login = this.login.bind(this);
+    this.handleRoute = this.handleRoute.bind(this);
   }
 
   updateUsername(event, data){
@@ -26,6 +27,12 @@ export default class Login extends Component {
     this.setState({
       password: data.value
     });
+  }
+
+  handleRoute(targetRoute){
+    if (targetRoute !== this.props.location.pathname) {
+      this.props.history.push(targetRoute);
+    }
   }
 
   login(){
@@ -75,6 +82,9 @@ export default class Login extends Component {
             <Input fluid value={this.state.password} onChange={this.updatePassword} type='password' placeholder='Şifre' /><br/>
             <Button fluid onClick={() => this.login()} color='teal' floated='right' type='submit'>Giriş Yap</Button>
           </Card.Content>
+          <Card.Content extra>
+            <a onClick={() => this.handleRoute('/forgotPassword')}>Şifreni mi unuttun ?</a>
+          </Card.Content>
         </Card>
         <Modal trigger={<Statistic className='authData' size='mini' value='v0.0.3'/>}>
           <Modal.Header>Son haberler ve S.S.S</Modal.Header>
@@ -85,7 +95,7 @@ export default class Login extends Component {
                 info
                 header='Sürüm'
                 list={[
-                  '0.0.4a'
+                  '0.0.5a'
                 ]}
               />
               <Message

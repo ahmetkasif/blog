@@ -91,64 +91,25 @@ html, body, #react-root, .render-target {
   box-shadow: 0px 0px 60px -6px rgba(0,0,0,0.75)!important;
 }
 
-/*************************** ABOUT *********************************/
-.about{
-  width: 98%;
-  margin-top: 1em;
-  margin-left: 1% !important;
-  margin-bottom: 1em;
-  padding: 0 !important;
+.generated{
+	background-image: -webkit-linear-gradient(92deg, #ff2929, #ffffff);
+	-webkit-animation: hue 60s infinite linear;
+}
 
-  .aboutGrid{
-    margin: 0 0 0 0 !important;
-    width: 100%;
+@-webkit-keyframes hue {
+	from {
+		-webkit-filter: hue-rotate(0deg);
+	}
 
-    .aboutTab{
-      padding: 0.5em 0.1em 0.5em 0 !important;
-    }
-
-    .aboutContent{
-      padding: 0.5em 0.1em 0.5em 0.1em !important;
-    }
-  }
-
-  .aboutSegment{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .aboutLogo{
-    align-self: center;
-    width: 4em;
-    margin: auto;
-  }
-
-  .teamContainer{
-    display: flex!important;
-    flex-direction: column!important;
-    align-items: center!important;
-    width: 100%;
-    & > div{
-      margin-top: 3px !important;
-      width: 300px !important;
-    }
-    a{
-    color: white;
-    background: rgba(0,0,0,0) !important;
-    }
-  }
-  .about_header{
-    font-size: 22px;
-    margin-bottom: 22px;
-  }
+	to {
+		-webkit-filter: hue-rotate(-360deg);
+	}
 }
 
 /**************** PROFILE ********************/
 .profile{
-	width: 98% !important;
-  margin-left: 1% !important;
+	width: 90% !important;
+  margin-left: 5% !important;
 
   .profileTop{
   	display: flex;
@@ -156,23 +117,10 @@ html, body, #react-root, .render-target {
   }
 }
 
-/************** STATISTICS ******************/
-
-.svgContainer{
-  max-width: 700px;
-}
-
 /************************* NAVBAR *******************************************/
 .navContainer {
-	z-index: 10;
 	background: rgba(255, 255, 255,1)!important;
 	width: 100% !important;
-
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	border-radius: 0 !important;
 
   .navButton {
     border-top: 3px var(--turk) solid !important;
@@ -199,48 +147,6 @@ html, body, #react-root, .render-target {
     	background-color: rgba(162, 159, 159, 0.1) !important;
     }
   }
-}
-
-/******************************* TIMER *********************************************/
-.clock{
-  font-size: 5em!important;;
-  font-weight: 300!important;;
-  font-family: 'Lato'!important;;
-  width: 100%;
-  text-align: center;
-  color: var(--white);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.5em;
-
-  .clockLogo{
-  	align-self: center;
-  	width: 1.5em !important;
-  	position: absolute;
-  	top:25%;
-    transform: translate(0,-50%);
-  }
-
-  .clockText{
-    align-self: center;
-    position: absolute;
-    top: 50%;
-    transform: translate(0,-50%);
-  }
-
-  .circular {
-  	max-width: 300px;
-		margin: auto;
-  	text-align: center;
-  }
-}
-
-.stop{
-  display: flex !important;
-  align-self: center!important;
-  position: absolute;
-  top: -6em;
 }
 
 /************************* TASK FRAME *******************************************/
@@ -330,39 +236,6 @@ html, body, #react-root, .render-target {
       color: rgba(10, 10, 10, 0.40)!important;
     }
   }//taskListItem
-
-  /*Task Progress */
-  .taskProgress{
-  	width: 100%;
-  	border: 0 none;
-  	background: @turk;
-  	border-radius: 1em;
-    transform: translate(0em,.5px);
-
-    &::-moz-progress-bar{
-      height: 4px;
-    	background:@red;
-     	box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3);
-    }
-    &::-webkit-progress-bar {
-      height: 4px;
-      background: rgb(255, 255, 255);
-    }
-    &::-webkit-progress-value {
-      height: 4px;
-      background: @red;
-    }
-    &.checked::-webkit-progress-value {
-      height: 4px;
-      background: @green;
-    }
-
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
-      &.taskProgress {
-        height: 4px;
-      }
-    }
-  }//taskProgress
 
 }//taskFrame
 
@@ -511,19 +384,16 @@ html, body, #react-root, .render-target {
 
 
 /************************ TASK Edit **********************/
-.taskEdit,.taskNew{
-  background-color: var(--turk) !important;
-  max-width: 400px;
-  width: 98%;
+.taskEdit, .taskNew{
+  width: 90%;
   margin: auto;
-  margin-top: 1em;
+	padding-bottom: 1em;
   display: flex;
   flex-direction: column !important;
   justify-content: center;
   align-items: center;
 
   .task{
-
     &EditHeader,&NewHeader{
       background-color: @white-dark;
       width: 100%;
@@ -675,22 +545,13 @@ html, body, #react-root, .render-target {
 
 /******************** AUTH *********************/
 .login{
-	max-width: 40%;
+	width: 50%!important;
 	margin: auto!important;
 }
 
 .loginContainer{
-	padding-top: 10%!important;
+	padding-top: 1em!important;
 	height: 100% !important;
-}
-
-.registerContainer{
-	padding-top: 10%!important;
-}
-
-.register{
-	max-width: 40%;
-	margin: auto!important;
 }
 
 .logo  {
