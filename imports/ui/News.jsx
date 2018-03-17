@@ -14,7 +14,7 @@ class News extends Component {
   renderAuthorPic(mail){
     if(mail){
       return(
-        <Image floated='right' size='mini' src={gravatar.url(mail.address)} />
+        <Image src={gravatar.url(mail.address)} />
       );
     } else {
       return(
@@ -26,18 +26,29 @@ class News extends Component {
   renderPosts(){
     if(this.props.posts.length !== 0){
       return this.props.posts.map((post) => (
-        <Card key={post._id}>
+        <Card key={post._id} className="postFrame">
+          <Card.Content className="postFrameHeader" header={
+            <Header as='h4' image>
+              {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
+              <Header.Content>
+                {post.title}
+                <Header.Subheader>{post.authorName}</Header.Subheader>
+              </Header.Content>
+            </Header>
+          }/>
           <Card.Content>
-            {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
-            <Card.Header>
-              {post.title}
-            </Card.Header>
-            <Card.Meta>
-              {post.authorName}
-            </Card.Meta>
-            <Card.Description>
-              {post.text}
-            </Card.Description>
+            {post.text}
+          </Card.Content>
+          <Card.Content extra>
+            <Label floated='right' as='a' tag>Yeni</Label>
+            <Label floated='right' as='a' color='red' tag>Teknoloji</Label>
+            <Label floated='right' as='a' color='teal' tag>Eğitim</Label>
+          </Card.Content>
+          <Card.Content extra>
+            <div className='ui'>
+              <Button color='olive' disabled>Paylaş</Button>
+              <Button color='teal' onClick={() => this.props.history.push('/postDetails/' + post._id, {id: post._id})}>İncele</Button>
+            </div>
           </Card.Content>
         </Card>
       ));
@@ -50,15 +61,13 @@ class News extends Component {
 
   render() {
     return (
-      <Card className="profile">
-        <Card.Content header={
-          <div className="profileTop">
-            <Header as='h4' image>
-              <Header.Content>
-                Yeni Makaleler
-              </Header.Content>
-            </Header>
-          </div>
+      <Card className="card">
+        <Card.Content className="cardHeader" header={
+          <Header as='h4' image>
+            <Header.Content>
+              Yeni Makaleler
+            </Header.Content>
+          </Header>
         }/>
         <Card.Content description={
           this.renderPosts()

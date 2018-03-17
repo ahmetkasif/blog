@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Image, Header, Label, Icon, Card, Button } from 'semantic-ui-react';
+import { Image, Header, Label, Icon, Card, Button, Form, Input } from 'semantic-ui-react';
 
 class Settings extends Component {
   constructor(props) {
@@ -21,7 +21,25 @@ class Settings extends Component {
           </div>
         }/>
         <Card.Content>
-          TODO
+          <Card>
+            <Card.Content header={
+              <div className="profileTop">
+                <Header as='h4'>
+                  <Header.Content>
+                    Şifre Değiştir
+                  </Header.Content>
+                </Header>
+              </div>
+            }/>
+            <Card.Content>
+              <Form>
+                <Form.Input fluid label='Mevcut Şifreniz' placeholder='Mevcut Şifreniz' />
+                <Form.Input fluid label='Yeni Şifreniz' placeholder='Yeni Şifreniz' />
+                <Form.Input fluid label='Yeni Şifreniz' placeholder='Yeni Şifreniz' />
+                <Form.Button>Değiştir</Form.Button>
+              </Form>
+            </Card.Content>
+          </Card>
         </Card.Content>
       </Card>
     );

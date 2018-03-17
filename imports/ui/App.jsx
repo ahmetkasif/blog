@@ -13,6 +13,7 @@ import About from './About.jsx';
 import ForgotPassword from './ForgotPassword.jsx';
 import ProfileContainer from './Profile.jsx';
 import NewPost from './NewPost.jsx';
+import EditPostContainer from './EditPost.jsx';
 import Login from './Login.jsx';
 import NewsContainer from './News.jsx';
 import SettingsContainer from './Settings.jsx';
@@ -64,9 +65,10 @@ export default class App extends Component {
         <div className="fullHeight">
           <Switch>
             <PrivateRoute path="/newPost" exact component={NewPost}/>
+            <PrivateRoute path="/editPost/:postId?" exact component={EditPostContainer}/>
             <PrivateRoute path="/settings" exact component={SettingsContainer}/>
             <DefaultLayout path="/" exact component={NewsContainer}/>
-            <DefaultLayout path="/postDetails/:id" exact component={PostDetailsContainer}/>
+            <DefaultLayout path="/postDetails/:postId?" exact component={PostDetailsContainer}/>
             <DefaultLayout path="/profile" exact component={ProfileContainer}/>
             <DefaultLayout path="/loading" exact component={Loading}/>
             <DefaultLayout path="/about" exact component={About}/>

@@ -1,29 +1,5 @@
-@fallback:#041828;
-@fallback-light:#557A99;
-@fallback-dark:#010E19;
-
-@red:#F71735;
-@red-dark:#3D0008;
-@red-light:#F7C0C8;
-
-@turk:#32e3f4;
-@turk-dark:#05535b;
-@turk-light:#7ae8f2;
-
-@white:#FDFFFC;
-@white-dark:#e7ebe6;
-@white-darker:#dbdbdb;
-
-@kahve:#8C5710;
-@kahve-dark:#381F00;
-@kahve-light:#BFA17A;
-
-@green:rgba(24, 163, 134, 1);
-
-@nice-blue: #5B83AD;
-@light-blue: @nice-blue + #111;
-
-@hide: #767676;
+@primary: cadetblue;
+@accent: wheat;
 
 /**************  GLOBALS ************/
 * {
@@ -32,7 +8,7 @@
 }
 
 html, body, #react-root, .render-target {
-	background-color: var(--turk);
+	background-color: cadetblue;
 	height: 100%;
 }
 
@@ -52,43 +28,11 @@ html, body, #react-root, .render-target {
 	margin-right: 10px!important;
 }
 
-.chatBox{
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-end;;
-	height: 100%;
-}
-
 .loading{
 	position: fixed;
 	transform: translate(-50%,-50%);
 	left: 50%;
 	top: 50%;
-}
-
-.settingsContainer{
-  width: 98% !important;
-  margin-left: 1% !important;
-  padding: 0 !important;
-
-  .settingsGrid{
-    margin: 0 0 0 0 !important;
-    width: 100%;
-
-    .settingsActions{
-      padding: 0.5em 0.1em 0.5em 0 !important;
-    }
-
-    .settingsContent{
-      padding: 0.5em 0.1em 0.5em 0.1em !important;
-    }
-  }
-}
-
-.taskDetails, .profile, .taskNew, .settingsContainer, .about{
-  -webkit-box-shadow: 0px 0px 60px -6px rgba(0,0,0,0.75)!important;
-  -moz-box-shadow: 0px 0px 60px -6px rgba(0,0,0,0.75)!important;
-  box-shadow: 0px 0px 60px -6px rgba(0,0,0,0.75)!important;
 }
 
 .generated{
@@ -106,441 +50,78 @@ html, body, #react-root, .render-target {
 	}
 }
 
-/**************** PROFILE ********************/
-.profile{
+.card{
 	width: 90% !important;
   margin-left: 5% !important;
+	border-width: medium!important;
 
-  .profileTop{
-  	display: flex;
-    flex-direction: column;
-  }
+	.cardHeader {
+		color: @primary!important;
+		background-color: @accent!important;
+	}
 }
 
 /************************* NAVBAR *******************************************/
 .navContainer {
-	background: rgba(255, 255, 255,1)!important;
-	width: 100% !important;
+  a {
+		color: @primary!important;
+  }
 
-  .navButton {
-    border-top: 3px var(--turk) solid !important;
-    border-radius: 0 !important;
-
-    & * {
-      color: var(--turk) !important;
-    }
-
-    &.active {
-    	border-top: 3px var(--red) solid !important;
-    	background-color: rgba(162, 159, 159, 0.1) !important;
-      & *{
-        color: var(--red) !important;
-      }
-    }
-
-    &:active span{
-    	animation: pulse linear .3s !important;
-    	animation-iteration-count: infinite;
-    }
-
-    &:hover{
-    	background-color: rgba(162, 159, 159, 0.1) !important;
-    }
+	div div div {
+		color: @primary!important;
+		div span{
+			color: @primary!important;
+	  }
   }
 }
 
-/************************* TASK FRAME *******************************************/
-.taskFrame{
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.5em;
-  align-items: stretch;
-  animation: slideIn 0.6s cubic-bezier(.165, .84, .44, 1)!important;
-
-  div.menu{
-    transform: translate(-105%,-40%);
-
-    button.item{
-      width: 100%;
-    }
-
-    div.start{
-      background-color: rgb(50, 158, 50);
-      color: white!important;
-    }
-
-    div.start:hover{
-      background-color: rgb(38, 150, 38)!important;
-      color: white!important;
-    }
-
-    div.finish{
-      background-color: rgb(11, 91, 99);
-      color: white!important;
-    }
-
-    div.finish:hover{
-      background-color: rgb(5, 83, 91)!important;
-    }
-
-    div.edit{
-      background-color: rgb(237, 185, 66);
-      color: white!important;
-    }
-
-    div.edit:hover{
-      background-color: rgb(236, 177, 45)!important;
-    }
-
-    div.hide{
-      background-color: rgb(79, 74, 74)!important;
-      color: white!important;
-      opacity: 1!important;
-    }
-
-    div.remove{
-      background-color: rgb(242, 41, 68);
-      color: white!important;
-    }
-
-    div.remove:hover{
-      background-color: rgb(247, 23, 53)!important;
-      color: white!important;
-    }
-  }
-
-  .taskListItem{
-  	background-color: #2d915f!important;
-  	border-radius: 0.05em;
-    padding: 0.25em;
-    position: relative;
-
-    .taskName{
-      position: absolute;
-      top: 25%;
-      left: 2em;
-      font-weight: 600;
-    }
-
-    .taskActions{
-      float: right;
-      top: 25%;
-    }
-
-    &:hover {
-    	background-color: #228b57!important;
-    }
-
-    &.checked {
-    	background-color: rgba(15, 177, 191, 0.2)!important;
-      color: rgba(10, 10, 10, 0.40)!important;
-    }
-  }//taskListItem
-
-}//taskFrame
-
-/********************* TASK DETAILS *********************/
-
-.taskDetails{
-  background-color: @white !important;
-  max-width: 500px;
-  margin: 1em auto 1em auto !important;
-
-  .taskDetailsContent{
-    width: 100%;
-    padding-bottom: 1em;
-
-
-    p {
-      opacity: 1 !important;
-      color: @fallback-dark !important;
-      font-size: 1em;
-    }
-
-    .each{
-      display: flex;
-      flex-direction: row;
-      align-self: center;
-      align-items: stretch;;
-      justify-content: space-between;
-      margin: auto;
-      margin-bottom: .5em;
-      width: 95%!important;
-    }
-
-    .taskName{
-      display: flex !important;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      margin: auto;
-      margin-bottom: 0.25em !important;
-      text-align: center;
-      color:@turk-dark !important;
-      background-color: @white-dark !important;
-      //transform: scale(.75);
-      margin-bottom: 3em;
-
-      p{
-        color:@red !important;
-        font-size: 3em;
-        flex-grow: 2;
-        margin: auto;
-      }
-
-      .back{
-        align-self: stretch;
-        width: 3em;
-        font-size: 2em;
-     }
-    }
-
-    .integrations{
-      margin: 1em;
-      float: right;
-    }
-
-    .target{
-      margin: .5em;
-      padding-right: 2em;
-      color:@turk-dark !important;
-
-    }
-
-    p.value {
-      color:@turk-dark !important;
-      background-color: @white-dark !important;
-      border-radius: .2em;
-      padding: .5em;
-    }
-
-    .moreInfo{
-      position: relative;
-      margin-bottom: 2em;
-      .value{
-        background-color: @white-dark !important;
-        overflow: auto;
-        width: 50em;
-        height: 10em;
-        font-size: 1em !important;
-        float: right;
-        padding: 1em;
-        ol,ul{padding-left: 2em;}
-        p{font-size: 1em !important;}
-      }
-    }
-
-  }//taskDetailsContent
-
-  .taskDetailsActions {
-    display: flex;
-    justify-content: center;
-
-    button.start{
-      background-color: rgb(38, 150, 38);
-      color: white!important;
-    }
-
-    button.start:hover{
-      background-color: rgb(50, 158, 50)!important;
-      color: white!important;
-    }
-
-    button.finish{
-      background-color: rgba(5, 83, 91, 1);
-      color: white!important;
-    }
-
-    button.finish:hover{
-      background-color: rgb(11, 91, 99)!important;
-    }
-
-    button.edit{
-      background-color: rgb(236, 177, 45);
-      color: white!important;
-    }
-
-    button.edit:hover{
-      background-color: rgb(237, 185, 66)!important;
-    }
-
-    button.hide{
-      background-color: rgb(79, 74, 74)!important;
-      color: white!important;
-      opacity: 1!important;
-    }
-
-    button.remove{
-      background-color: rgb(247, 23, 53);
-      color: white!important;
-    }
-
-    button.remove:hover{
-      background-color: rgb(242, 41, 68)!important;
-      color: white!important;
-    }
-  }//taskDetailsActions
-}//EO taskDetails
-
-
-/************************ TASK Edit **********************/
-.taskEdit, .taskNew{
-  width: 90%;
-  margin: auto;
+.newPost{
+	width: 90%;
+	margin: auto;
 	padding-bottom: 1em;
-  display: flex;
-  flex-direction: column !important;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column!important;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
 
-  .task{
-    &EditHeader,&NewHeader{
-      background-color: @white-dark;
-      width: 100%;
-      margin: auto;
-      padding-top: 1em;
-      padding-bottom: 1em;
-      padding-left: 1em;
-    }
-    &NewHeader{color: @green;}
-    &EditHeader{color:  rgb(249, 91, 2);}
+	.newPostHeader{
+		color: @primary!important;
+		background-color: @accent!important;
+    width: 100%;
+    margin: auto;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
   }
 
-  .taskEditContent,.taskNewContent{
-    width: 100%;
-    background-color: var(--white) !important;
-    padding: 1em;
-    display: flex !important;
-    flex-direction: column!important;
-    align-items: center;
-    max-height: none!important;
+	.newPostContent {
+		width: 100%;
+		background-color: white!important;
+		padding: 1em;
+		display: flex!important;
+		flex-direction: column!important;
+		align-items: center;
+		max-height: none!important;
 
-    .dropdownCont {
-      color: var(--fallback-dark) !important;
-      display: flex;
-      align-items: stretch;
-      justify-content: space-around;
-      .dropdown.icon{display: none;}
-    }
-
-    input{
-      color: var(--fallback-dark) !important;
-    }
-
-    .each{
-      color: var(--fallback-light) !important;
-      width: 100%;
-      margin-top: 1em;
-    }
-
-    .moreInfo{
-      margin: auto;
-      overflow: auto;
-      height: 100px!important;
-    }
-  }//taskEditContent
-
-  .taskEditActions,.taskNewActions {
-    width: 100%;
-    display: flex !important;
-    flex-direction: row;
-    align-items: center !important ;
-    justify-content: center;
-    background-color: var(--white-dark) !important;
-    padding: 1em;
-
-    button{
-      margin: 0px 1em 0px 1em !important;
-      color: var(--fallback-dark) !important;
-      border-radius: 0;
-
-      & span{
-        color: var(--fallback-dark) !important;
-        opacity: .8;
-      }
-      &:hover span{
-        opacity: 1
-      }
-    }//button
-  }//taskEditActions
-
-}//EO taskEdit
-
-/************************  NEW TASK *********************************************/
-.taskNew{
-
-}//taskNew
-
+		.each {
+			width: 100%;
+			margin-top: 1em;
+		}
+	}
+}
 
 /************************  TASK LIST *********************************************/
 
-.projectButton{
-	margin: auto !important;
-  margin-bottom: 2em!important;
-	max-width: 200px !important;
-	display: flex !important;
-	flex-direction: column !important;
+.postFrame{
+	width: 96%!important;
+	margin: 1em auto 1em auto!important;
+
+	.postFrameHeader {
+		color: @primary!important;
+		background-color: @accent!important;
+  }
 }
-
-.taskList{
-  margin: auto !important;
-  margin-bottom: 2em!important;
-	background-color: var(--turk-light) !important;
-  border-radius: 1px !important;
-	width: 84% !important;
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: stretch !important;
-
-  .taskListActions{
-    padding: 0.2em;
-
-    .moveButtons{
-      float: right;
-      margin: 0 0 0 0.5em
-    }
-
-    .newTaskButton{
-      color: @red!important;
-      box-shadow: 0 0 0 2px @red inset!important;
-    }
-
-    .newTaskButton:hover{
-      color: @red!important;
-      background-color: rgba(255, 255, 255, 0.65)!important;
-      box-shadow: 0 0 0 2px @red inset!important;
-    }
-  }
-
-  .taskListContent{
-    padding: 0.2em;
-  }
-
-  .subheader{
-  	display: flex!important;
-  	flex-direction: row!important;
-  	margin: auto;
-  	width: 100%;
-  }
-
-  .toggleChecked  {
-  	width: 30% !important;
-  }
-
-  .tagView .totalPomos{
-  	font-family: 'Raleway', sans-serif;
-  	font-size: 1.5em;
-  	color: white;
-  	font-weight: 800;
-  	background-color: black;
-  	opacity: .5;
-  	align-self:flex-start;
-  	padding:0.5em;
-  	margin-top: 0px;
-  	margin-bottom: 0px;
-  }
-
-}//taskListCard
 
 
 /******************** AUTH *********************/
@@ -558,35 +139,4 @@ html, body, #react-root, .render-target {
 	max-width: 16em;
 	margin: auto!important;
 	margin-bottom: 1em!important;
-}
-
-.authActions{
-	color: rgb(7, 66, 219);
-
-	&:hover{
-		color: rgb(0, 47, 170);
-		cursor: pointer;
-	}
-}
-
-.authData{
-	margin: 0 !important;
-	position: absolute;
-  bottom: 10px;
-  right: 10px;
-	cursor: pointer;
-	animation: tada ease-in .2;
-	transform-origin: 50% 50%;
-	-webkit-animation: tada linear .5s;
-	-webkit-animation-iteration-count: 1;
-	-webkit-transform-origin: 50% 50%;
-	-moz-animation: tada linear .5s;
-	-moz-animation-iteration-count: 1;
-	-moz-transform-origin: 50% 50%;
-	-o-animation: tada linear .5s;
-	-o-animation-iteration-count: 1;
-	-o-transform-origin: 50% 50%;
-	-ms-animation: tada linear .5s;
-	-ms-animation-iteration-count: 1;
-	-ms-transform-origin: 50% 50%;
 }

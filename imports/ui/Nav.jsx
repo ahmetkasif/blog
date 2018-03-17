@@ -34,11 +34,11 @@ export default class Nav extends Component {
             Anasayfa
         </Menu.Item>
         <Menu.Menu>
-          <Dropdown item text='Kategoriler' className="navButton">
+          <Dropdown disabled item text='Kategoriler' className="navButton">
             <Dropdown.Menu>
-              <Dropdown.Item text='tag1' onClick={() => this.handleRoute('/tags/tag1')}/>
-              <Dropdown.Item text='tag2' onClick={() => this.handleRoute('/tags/tag2')}/>
-              <Dropdown.Item text='tag3' onClick={() => this.handleRoute('/tags/tag3')}/>
+              <Dropdown.Item text='yeni' onClick={() => this.handleRoute('/tags/yeni')}/>
+              <Dropdown.Item text='teknoloji' onClick={() => this.handleRoute('/tags/teknoloji')}/>
+              <Dropdown.Item text='egitim' onClick={() => this.handleRoute('/tags/egitim')}/>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

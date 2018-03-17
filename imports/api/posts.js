@@ -41,6 +41,10 @@ if (Meteor.isServer) {
     return users;
   });
 
+  Meteor.publish('post', function(id) {
+    return Posts.find({_id: id});
+  });
+
   Meteor.publish('posts', function() {
     return Posts.find({});
   });

@@ -18,7 +18,7 @@ class Profile extends Component {
   renderAuthorPic(mail){
     if(mail){
       return(
-        <Image floated='right' size='mini' src={gravatar.url(mail.address)} />
+        <Image src={gravatar.url(mail.address)} />
       );
     } else {
       return(
@@ -30,18 +30,28 @@ class Profile extends Component {
   renderPosts(){
     if(this.props.posts.length !== 0){
       return this.props.posts.map((post) => (
-        <Card key={post._id}>
+        <Card key={post._id} className="postFrame">
+          <Card.Content className="postFrameHeader" header={
+            <Header as='h4' image>
+              {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
+              <Header.Content>
+                {post.title}
+                <Header.Subheader>{post.authorName}</Header.Subheader>
+              </Header.Content>
+            </Header>
+          }/>
           <Card.Content>
-            {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
-            <Card.Header>
-              {post.title}
-            </Card.Header>
-            <Card.Meta>
-              {post.authorName}
-            </Card.Meta>
-            <Card.Description>
-              {post.text}
-            </Card.Description>
+            {post.text}
+          </Card.Content>
+          <Card.Content extra>
+            <Label floated='right' as='a' tag>Yeni</Label>
+            <Label floated='right' as='a' color='red' tag>Teknoloji</Label>
+            <Label floated='right' as='a' color='teal' tag>Eğitim</Label>
+          </Card.Content>
+          <Card.Content extra>
+            <div className='ui'>
+              <Button color='olive' disabled>Paylaş</Button>
+            </div>
           </Card.Content>
         </Card>
       ));
@@ -55,18 +65,19 @@ class Profile extends Component {
   renderProfile(){
     if(this.props.user){
       return(
-        <Card className="profile">
-          <Card.Content header={
-            <div className="profileTop">
-              <Header as='h4' image>
-                <Image src={gravatar.url(this.props.user.emails[0].address)} />
-                <Header.Content>
-                  {this.props.user.username}
-                  <Header.Subheader>{this.props.user.emails[0].address}</Header.Subheader>
-                </Header.Content>
-              </Header>
-            </div>
+        <Card className="card">
+          <Card.Content className="cardHeader" header={
+            <Header as='h4' image>
+              <Image src={gravatar.url(this.props.user.emails[0].address)} />
+              <Header.Content>
+                {this.props.user.username}
+                <Header.Subheader>{this.props.user.emails[0].address}</Header.Subheader>
+              </Header.Content>
+            </Header>
           }/>
+          <Card.Content>
+            <b>Bio: </b>Bilgisayar Mühendisi ve Yüksek Lisans Öğrencisi. Genellikle gündem, teknoloji ve eğitim ile alakalı yazılar paylaşır. Boş zamanlarında kitap okumayı ve satranç oynamayı sever. Kişisel web sayfası'na <a href="https://ahmetkasif.github.io">buradan</a> ulaşılabilir.
+          </Card.Content>
           <Card.Content description={
             this.renderPosts()
           }/>

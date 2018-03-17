@@ -37,10 +37,10 @@ export default class NewPost extends Component {
       this.state.text
     );
     new Noty({
-      type: 'success',
+      type: 'information',
       layout: 'topRight',
       theme: 'sunset',
-      text: 'Makale Paylaşıldı..',
+      text: 'İçerik başarıyla eklendi',
       timeout: 1000,
       progressBar: true,
       closeWith: ['click', 'button'],
@@ -54,25 +54,26 @@ export default class NewPost extends Component {
 
   render() {
     return (
-      <div className="taskNew">
-        <h3 className="taskNewHeader">Yeni makale</h3>
-        <div className="taskNewContent">
+      <div className="newPost">
+        <h3 className="newPostHeader">Yeni makale</h3>
+        <div className="newPostContent">
           <Input
             label='Makale Başlığı'
             size='small'
-            id="edit-task-name"
+            placeholder="Başlık giriniz.."
             value={this.state.title}
             type="text"
             onChange={this.updateTitle}
-            className='taskName each'
+            className='each'
           />
           <Form className="each">
             <TextArea
               size='large'
               placeholder="Yazı"
+              type="text"
               value={this.state.text}
               onChange={this.updateText}
-              className="each moreInfo"
+              className="each"
             />
           </Form>
         </div>
