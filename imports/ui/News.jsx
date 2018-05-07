@@ -31,8 +31,10 @@ class News extends Component {
             <Header as='h4' image>
               {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
               <Header.Content>
-                {post.title}
-                <Header.Subheader>{post.authorName}</Header.Subheader>
+                <Header.Content>
+                  <Label color='red' horizontal>{post.title}</Label>
+                  <Header.Subheader style={{cursor: 'pointer'}} onClick={() => this.props.history.push('/profile/' + post.authorName, {username: post.authorName})}><Label basic horizontal>{post.authorName}</Label></Header.Subheader>
+                </Header.Content>
               </Header.Content>
             </Header>
           }/>
@@ -40,9 +42,9 @@ class News extends Component {
             {post.text}
           </Card.Content>
           <Card.Content extra>
-            <Label floated='right' as='a' tag>Yeni</Label>
-            <Label floated='right' as='a' color='red' tag>Teknoloji</Label>
-            <Label floated='right' as='a' color='teal' tag>Eğitim</Label>
+            <Label horizontal as='a' color='green'>Yeni</Label>
+            <Label horizontal as='a' color='red'>Teknoloji</Label>
+            <Label horizontal as='a' color='teal'>Eğitim</Label>
           </Card.Content>
           <Card.Content extra>
             <div className='ui'>

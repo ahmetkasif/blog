@@ -69,7 +69,7 @@ export default class App extends Component {
             <PrivateRoute path="/settings" exact component={SettingsContainer}/>
             <DefaultLayout path="/" exact component={NewsContainer}/>
             <DefaultLayout path="/postDetails/:postId?" exact component={PostDetailsContainer}/>
-            <DefaultLayout path="/profile" exact component={ProfileContainer}/>
+            <DefaultLayout path="/profile/:username?" exact component={ProfileContainer}/>
             <DefaultLayout path="/loading" exact component={Loading}/>
             <DefaultLayout path="/about" exact component={About}/>
             <DefaultLayout path="/login" exact component={Login}/>

@@ -28,15 +28,15 @@ class Profile extends Component {
   }
 
   renderPosts(){
-    if(this.props.posts.length !== 0){
+    if(this.props.posts != null){
       return this.props.posts.map((post) => (
         <Card key={post._id} className="postFrame">
           <Card.Content className="postFrameHeader" header={
             <Header as='h4' image>
               {post.authorMails ? this.renderAuthorPic(post.authorMails[0]) : null}
               <Header.Content>
-                {post.title}
-                <Header.Subheader>{post.authorName}</Header.Subheader>
+                <Label color='red' horizontal style={{marginBottom: '0.15em'}}>{post.title}</Label>
+                <Header.Subheader style={{cursor: 'pointer'}} onClick={() => this.props.history.push('/profile/' + post.authorName, {username: post.authorName})}><Label basic horizontal>{post.authorName}</Label></Header.Subheader>
               </Header.Content>
             </Header>
           }/>
@@ -44,9 +44,9 @@ class Profile extends Component {
             {post.text}
           </Card.Content>
           <Card.Content extra>
-            <Label floated='right' as='a' tag>Yeni</Label>
-            <Label floated='right' as='a' color='red' tag>Teknoloji</Label>
-            <Label floated='right' as='a' color='teal' tag>Eğitim</Label>
+            <Label horizontal as='a' color='green'>Yeni</Label>
+            <Label horizontal as='a' color='red'>Teknoloji</Label>
+            <Label horizontal as='a' color='teal'>Eğitim</Label>
           </Card.Content>
           <Card.Content extra>
             <div className='ui'>
@@ -76,7 +76,8 @@ class Profile extends Component {
             </Header>
           }/>
           <Card.Content>
-            <b>Bio: </b>Bilgisayar Mühendisi ve Yüksek Lisans Öğrencisi. Genellikle gündem, teknoloji ve eğitim ile alakalı yazılar paylaşır. Boş zamanlarında kitap okumayı ve satranç oynamayı sever. Kişisel web sayfası'na <a href="https://ahmetkasif.github.io">buradan</a> ulaşılabilir.
+            <b>Bio: </b>Placeholder text.
+            <b>Some information about author: </b>Placeholder text.
           </Card.Content>
           <Card.Content description={
             this.renderPosts()
@@ -100,17 +101,18 @@ class Profile extends Component {
 }
 
 export default ProfileContainer = withTracker(props => {
-  Meteor.subscribe('userPosts');
-  const user = Meteor.users.findOne(Meteor.userId(), {profile: 1, username: 1, emails: 1});
+  Meteor.subscribe('userProfile', props.match.params.username);
+  var user = Meteor.users.findOne({username: props.match.params.username}, {profile: 1, username: 1, emails: 1});
+  posts = [];
+  if(user != undefined){
+    Meteor.subscribe('userPosts', user._id);
 
-  const posts = Posts.find({}, {transform: function (post) {
-    const author = Meteor.users.findOne({_id: post.authorId}, { fields: { username: 1, emails: 1 }});
-    if(author){
-      post.authorName = author.username;
-      post.authorMails = author.emails;
-    }
-    return post;
-  }}).fetch();
+    posts = Posts.find({}, {transform: function (post) {
+      post.authorName = user.username;
+      post.authorMails = user.emails;
+      return post;
+    }}).fetch();
+  }
 
   return{
     user,

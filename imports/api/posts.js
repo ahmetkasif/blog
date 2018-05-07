@@ -37,8 +37,13 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('users', function() {
-    let users = Meteor.users.find({}, { fields: { username: 1, emails: 1 }});
+    let users = Meteor.users.find({}, { fields: { profile:1, username: 1, emails: 1 }});
     return users;
+  });
+
+  Meteor.publish('userProfile', function(username) {
+    let user = Meteor.users.find({username: username}, { fields: { profile:1, username: 1, emails: 1 }});
+    return user;
   });
 
   Meteor.publish('post', function(id) {
@@ -49,7 +54,7 @@ if (Meteor.isServer) {
     return Posts.find({});
   });
 
-  Meteor.publish('userPosts', function() {
-    return Posts.find({authorId: this.userId}, {limit: 10, sort: {createdAt: -1}});
+  Meteor.publish('userPosts', function(id) {
+    return Posts.find({authorId: id}, {limit: 10, sort: {createdAt: -1}});
   });
 }

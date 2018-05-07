@@ -60,7 +60,7 @@ export default class Nav extends Component {
             </Menu.Item>
             <Dropdown item text='Ayarlar'>
               <Dropdown.Menu>
-                <Dropdown.Item text='Profil' onClick={() => this.handleRoute('/profile')}/>
+                <Dropdown.Item text='Profil' onClick={() => this.props.history.push('/profile/' + Meteor.users.findOne(Meteor.userId()).username, {username: Meteor.users.findOne(Meteor.userId()).username})}/>
                 <Dropdown.Item text='Yeni Makale' onClick={() => this.handleRoute('/newPost')}/>
                 <Dropdown.Item text='Hesap Ayarları' onClick={() => this.handleRoute('/settings')}/>
                 <Dropdown.Item text='Çıkış Yap' onClick={() => Meteor.logout(() => this.props.history.push('/'))}/>

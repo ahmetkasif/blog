@@ -86,7 +86,7 @@ export default class Login extends Component {
             <a onClick={() => this.handleRoute('/forgotPassword')}>Şifreni mi unuttun ?</a>
           </Card.Content>
         </Card>
-        <Modal trigger={<Statistic className='authData' size='mini' value='v0.0.3'/>}>
+        <Modal trigger={<Statistic className='authData' size='mini' value='v0.0.7'/>}>
           <Modal.Header>Son haberler ve S.S.S</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
@@ -95,7 +95,7 @@ export default class Login extends Component {
                 info
                 header='Sürüm'
                 list={[
-                  '0.0.5a'
+                  '0.0.7'
                 ]}
               />
               <Message
