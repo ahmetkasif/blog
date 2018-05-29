@@ -12,6 +12,7 @@ class EditPost extends Component {
     this.state = {
       title: "",
       text: "",
+      categories: [],
       tag: ""
     };
 
@@ -46,7 +47,8 @@ class EditPost extends Component {
       'editPost',
       this.props.post._id,
       this.state.title,
-      this.state.text
+      this.state.text,
+      this.state.categories
     );
     new Noty({
       type: 'information',

@@ -10,6 +10,7 @@ export default class NewPost extends Component {
     this.state = {
       title: '',
       text: "",
+      categories: [],
       tag: ""
     };
 
@@ -34,7 +35,8 @@ export default class NewPost extends Component {
     Meteor.call(
       'addPost',
       this.state.title,
-      this.state.text
+      this.state.text,
+      this.state.categories
     );
     new Noty({
       type: 'information',

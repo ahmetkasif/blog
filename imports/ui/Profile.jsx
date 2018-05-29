@@ -27,6 +27,14 @@ class Profile extends Component {
     }
   }
 
+  renderAuthorActions(post){
+    if(post.authorId === Meteor.userId()){
+      return(
+        <Button color='teal' onClick={() => this.props.history.push('/editPost/' + post._id, {id: post._id})}>Düzenle</Button>
+      );
+    }
+  }
+
   renderPosts(){
     if(this.props.posts != null){
       return this.props.posts.map((post) => (
@@ -50,7 +58,9 @@ class Profile extends Component {
           </Card.Content>
           <Card.Content extra>
             <div className='ui'>
-              <Button color='olive' disabled>Paylaş</Button>
+              <Button color='olive' onClick={() => this.props.history.push('/postDetails/' + post._id, {id: post._id})}>İncele</Button>
+              {this.renderAuthorActions(post)}
+              <Button color='blue' disabled>Paylaş</Button>
             </div>
           </Card.Content>
         </Card>
@@ -101,11 +111,16 @@ class Profile extends Component {
 }
 
 export default ProfileContainer = withTracker(props => {
-  Meteor.subscribe('userProfile', props.match.params.username);
+  Tracker.autorun(() => {
+    Meteor.subscribe('userProfile', props.match.params.username);
+  });
+
   var user = Meteor.users.findOne({username: props.match.params.username}, {profile: 1, username: 1, emails: 1});
   posts = [];
   if(user != undefined){
-    Meteor.subscribe('userPosts', user._id);
+    Tracker.autorun(() => {
+      Meteor.subscribe('userPosts', user._id);
+    });
 
     posts = Posts.find({}, {transform: function (post) {
       post.authorName = user.username;

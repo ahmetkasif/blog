@@ -9,14 +9,12 @@ export default class NotFound extends Component {
   render() {
     return (
       <div className="loading">
-        <h3 className="circular">Route '{this.props.location.pathname}' is not defined.</h3>
+        <h3>Sayfa bulunamadı.</h3>
         <Button
           icon={<Icon link as="span" className='fa fa-exclamation-triangle'/>}
-          content='Go back'
+          content='Geri dön'
           labelPosition='left'
-          basic
           color='orange'
-          className="logout animated fadeIn"
           onClick={() => this.props.history.goBack()}
         />
       </div>

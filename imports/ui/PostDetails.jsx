@@ -40,8 +40,8 @@ class PostDetails extends Component {
             <Header as='h4' image>
               {this.props.post.authorMails ? this.renderAuthorPic(this.props.post.authorMails[0]) : null}
               <Header.Content>
-                {this.props.post.title}
-                <Header.Subheader>{this.props.post.authorName}</Header.Subheader>
+                <Label color='red' horizontal style={{marginBottom: '0.15em'}}>{this.props.post.title}</Label>
+                <Header.Subheader style={{cursor: 'pointer'}} onClick={() => this.props.history.push('/profile/' + this.props.post.authorName, {username: this.props.post.authorName})}><Label basic horizontal>{this.props.post.authorName}</Label></Header.Subheader>
               </Header.Content>
             </Header>
           }/>
@@ -49,15 +49,14 @@ class PostDetails extends Component {
             {this.props.post.text}
           </Card.Content>
           <Card.Content extra>
-            <Label floated='right' as='a' tag>Yeni</Label>
-            <Label floated='right' as='a' color='red' tag>Teknoloji</Label>
-            <Label floated='right' as='a' color='teal' tag>Eğitim</Label>
+            <Label horizontal as='a' color='green'>Yeni</Label>
+            <Label horizontal as='a' color='red'>Teknoloji</Label>
+            <Label horizontal as='a' color='teal'>Eğitim</Label>
           </Card.Content>
           <Card.Content extra>
             <div className='ui'>
-              <Button color='olive' disabled>Paylaş</Button>
-              <Button color='teal' disabled>Beğen</Button>
               {this.renderAuthorActions()}
+              <Button color='blue' disabled>Paylaş</Button>
             </div>
           </Card.Content>
         </Card>
@@ -73,14 +72,16 @@ class PostDetails extends Component {
     return (
       <div>
         {this.renderPost()}
-      </div>      
+      </div>
     );
   }
 }
 
 export default PostDetailsContainer = withTracker(props => {
-  Meteor.subscribe('users');
-  Meteor.subscribe('post', props.match.params.postId);
+  Tracker.autorun(() => {
+    Meteor.subscribe('users');
+    Meteor.subscribe('post', props.match.params.postId);
+  });
 
   const post = Posts.findOne({_id: props.match.params.postId}, {transform: function (post) {
     const author = Meteor.users.findOne({_id: post.authorId}, { fields: { username: 1, emails: 1 }});

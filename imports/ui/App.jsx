@@ -4,25 +4,25 @@ import createHistory from 'history/createBrowserHistory';
 import 'semantic-ui-css/semantic.min.css';
 
 import { Posts } from '../api/posts.js';
+import { Categories } from '../api/categories.js';
 
-import Loading from './Loading.jsx';
-import NotFound from './NotFound.jsx';
-
-import Nav from './Nav.jsx';
-import About from './About.jsx';
+import NavContainer from './Nav.jsx';
+import News from './News.jsx';
 import ForgotPassword from './ForgotPassword.jsx';
 import ProfileContainer from './Profile.jsx';
 import NewPost from './NewPost.jsx';
+import PostDetailsContainer from './PostDetails.jsx';
 import EditPostContainer from './EditPost.jsx';
 import Login from './Login.jsx';
-import NewsContainer from './News.jsx';
 import SettingsContainer from './Settings.jsx';
-import PostDetailsContainer from './PostDetails.jsx';
+import About from './About.jsx';
+import Loading from './Loading.jsx';
+import NotFound from './NotFound.jsx';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     Meteor.userId() ? (
-      <DefaultLayout {...rest} component={matchProps => (
+      <PublicRoute {...rest} component={matchProps => (
         <Component {...matchProps} />
       )} />
     ) : (
@@ -34,25 +34,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )}/>
 );
 
-const DefaultLayout = ({component: Component, ...rest}) => {
+const PublicRoute = ({component: Component, ...rest}) => {
   return (
     <Route {...rest} render={matchProps => (
       <div className="DefaultLayout">
-        <Nav {...matchProps} />
+        <NavContainer {...matchProps} />
         <Component {...matchProps} />
       </div>
     )} />
   )
 };
-
-const PublicRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    <div className="DefaultLayout">
-      <Nav {...matchProps} />
-      <Component {...matchProps} />
-    </div>
-  )}/>
-);
 
 export default class App extends Component {
   constructor(props) {
@@ -64,17 +55,18 @@ export default class App extends Component {
       <Router history={ createHistory() }>
         <div className="fullHeight">
           <Switch>
+            <PublicRoute path="/" exact component={News}/>
+            <PublicRoute path="/posts/:category?" exact component={PostListContainer}/>
             <PrivateRoute path="/newPost" exact component={NewPost}/>
             <PrivateRoute path="/editPost/:postId?" exact component={EditPostContainer}/>
             <PrivateRoute path="/settings" exact component={SettingsContainer}/>
-            <DefaultLayout path="/" exact component={NewsContainer}/>
-            <DefaultLayout path="/postDetails/:postId?" exact component={PostDetailsContainer}/>
-            <DefaultLayout path="/profile/:username?" exact component={ProfileContainer}/>
-            <DefaultLayout path="/loading" exact component={Loading}/>
-            <DefaultLayout path="/about" exact component={About}/>
-            <DefaultLayout path="/login" exact component={Login}/>
-            <DefaultLayout path="/forgotPassword" exact component={ForgotPassword}/>
-            <DefaultLayout component={NotFound} />
+            <PublicRoute path="/postDetails/:postId?" exact component={PostDetailsContainer}/>
+            <PublicRoute path="/profile/:username?" exact component={ProfileContainer}/>
+            <PublicRoute path="/loading" exact component={Loading}/>
+            <PublicRoute path="/about" exact component={About}/>
+            <PublicRoute path="/login" exact component={Login}/>
+            <PublicRoute path="/forgotPassword" exact component={ForgotPassword}/>
+            <PublicRoute component={NotFound} />
           </Switch>
         </div>
       </Router>

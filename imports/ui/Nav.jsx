@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Icon, Menu, Dropdown } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class Nav extends Component {
+class Nav extends Component {
   constructor(props) {
     super(props);
 
@@ -14,6 +15,12 @@ export default class Nav extends Component {
     if (targetRoute !== this.props.location.pathname) {
       this.props.history.push(targetRoute);
     }
+  }
+
+  renderCategories(){
+    return this.props.categories.map((category) => (
+      <Dropdown.Item key={category._id} text={category.name} style={{'color': category.color}} onClick={() => this.props.history.push('/posts/' + category.name, {name: category.name})}/>
+    ));
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -34,11 +41,9 @@ export default class Nav extends Component {
             Anasayfa
         </Menu.Item>
         <Menu.Menu>
-          <Dropdown disabled item text='Kategoriler' className="navButton">
+          <Dropdown item text='Kategoriler' className="navButton">
             <Dropdown.Menu>
-              <Dropdown.Item text='yeni' onClick={() => this.handleRoute('/tags/yeni')}/>
-              <Dropdown.Item text='teknoloji' onClick={() => this.handleRoute('/tags/teknoloji')}/>
-              <Dropdown.Item text='egitim' onClick={() => this.handleRoute('/tags/egitim')}/>
+              {this.renderCategories()}
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
@@ -88,3 +93,15 @@ export default class Nav extends Component {
     )
   }
 }
+
+export default  NavContainer = withTracker(props => {
+  Tracker.autorun(() => {
+    Meteor.subscribe('categories');
+  });
+
+  categories = Categories.find().fetch();
+
+  return {
+    categories
+  };
+})(Nav);

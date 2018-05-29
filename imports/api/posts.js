@@ -7,27 +7,22 @@ Posts = new Mongo.Collection('posts');
 
 if (Meteor.isServer) {
   Meteor.methods({
-    addPost: function(title, text){
+    addPost: function(title, text, categories){
       Posts.insert({
         authorId: Meteor.userId(),
         title: title,
         text: text,
         viewCount: 0,
+        categories: categories,
         createdAt: new Date()
       });
     },
-    editPost: function(id, title, text){
+    editPost: function(id, title, text, categories){
       Posts.update(id, {
         $set: {
           title: title,
-          text: text
-        }
-      });
-    },
-    addTag: function(id, tag){
-      Posts.update(id, {
-        $set: {
-          tag: tag
+          text: text,
+          categories: categories
         }
       });
     },
@@ -52,6 +47,10 @@ if (Meteor.isServer) {
 
   Meteor.publish('posts', function() {
     return Posts.find({});
+  });
+
+  Meteor.publish('postsWithCategory', function(category) {
+    return Posts.find({'categories' : { $in : [category]}});
   });
 
   Meteor.publish('userPosts', function(id) {
